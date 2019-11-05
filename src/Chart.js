@@ -1,29 +1,26 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import { BarChart, Tooltip, Bar, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
 
 // Generate Data
-function createData(country, score) {
-  return { country, score };
+function createData(dataMap, type) {
+  const data = []
+  for (var [key, value] of dataMap) {
+    data.push({[type]: key, score: value.average});
+  }
+  return data;
 }
 
-const data = [
-  createData('DE', 79),
-  createData('UK', 63),
-  createData('FR', 76),
-  createData('ES', 68),
-  createData('NL', 90),
-  createData('IT', 55),
-  createData('AU', undefined),
-];
 
-export default function Chart() {
+
+export default function Chart({type, dataMap}) {
+  const dataProcessed = createData(dataMap, type);
   return (
     <React.Fragment>
       <Title>Score statistics</Title>
       <ResponsiveContainer>
         <BarChart
-          data={data}
+          data={dataProcessed}
           margin={{
             top: 16,
             right: 16,
@@ -31,7 +28,8 @@ export default function Chart() {
             left: 24,
           }}
         >
-          <XAxis dataKey="country" />
+          <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
+          <XAxis dataKey={type} />
           <YAxis>
             <Label angle={270} position="left" style={{ textAnchor: 'middle' }}>
               Average score
