@@ -8,6 +8,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from '../Title';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 
 const labels = [{
@@ -40,10 +43,18 @@ const ScoreTable = ({
 }) => {
   return (
     <React.Fragment>
-      <Title>Scores listing</Title>
+      <Title>
+        Scores listing
+        <Tooltip title="Filter list">
+          <IconButton aria-label="filter list">
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
+      </Title>
       <Table size="small">
         <TableHead>
           <TableRow>
+          
             {labels.map(header => {
               const isActive = orderBy === header.id;
               return (
